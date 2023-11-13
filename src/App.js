@@ -1,10 +1,25 @@
+import { useState } from "react";
 import data from "./data.json";
 
 function App() {
+  const [whichScreen, setWhichScreen] = useState("home");
+  const [selectedCountry, setSelectedCountry] = useState(null);
+
+  function handleScreenSwitch(screen) {
+    setWhichScreen(screen);
+  }
+
+  function handleCountrySelection(val) {
+    const selected = val;
+    setSelectedCountry(selected);
+    console.log(selected);
+  }
+
   return (
     <div className="app">
       <Navbar />
-      <Home />
+
+      <Home onCountrySelect={handleCountrySelection} />
       {/* <DetailCountry /> */}
     </div>
   );
@@ -22,11 +37,11 @@ function Navbar() {
   );
 }
 
-function Home() {
+function Home({ onCountrySelect }) {
   return (
     <section className="home-section">
       <SearchBar />
-      <Countries />
+      <Countries onCountrySelect={onCountrySelect} />
     </section>
   );
 }
@@ -47,18 +62,23 @@ function SearchBar() {
   );
 }
 
-function Countries() {
+function Countries({ onCountrySelect }) {
   return (
     <div className="countries-container">
       {" "}
-      {data.map((c, i) => i < 8 && <Country key={i} country={c} />)}
+      {data.map(
+        (c, i) =>
+          i < 8 && (
+            <Country onCountrySelect={onCountrySelect} key={i} country={c} />
+          )
+      )}
     </div>
   );
 }
 
-function Country({ country }) {
+function Country({ country, onCountrySelect }) {
   return (
-    <div className="country-box">
+    <div onClick={() => onCountrySelect(country.name)} className="country-box">
       <img src={country.flag} alt="country flag" />
       <div className="country-box-detail">
         <p>{country.name}</p>

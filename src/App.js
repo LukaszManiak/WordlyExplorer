@@ -2,7 +2,6 @@ import { useState } from "react";
 import data from "./data.json";
 
 function App() {
-  const [whichScreen, setWhichScreen] = useState("home");
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [searchCountry, setSearchCountry] = useState("");
   const [region, setRegion] = useState("None");
@@ -37,10 +36,6 @@ function App() {
 
   function handleGoBackToHome() {
     setSelectedCountry(null);
-  }
-
-  function handleScreenSwitch(screen) {
-    setWhichScreen(screen);
   }
 
   function handleCountrySelection(val) {

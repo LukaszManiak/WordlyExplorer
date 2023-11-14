@@ -28,8 +28,10 @@ body {
 }
 .app {
   width: 100%;
+
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 nav {
@@ -69,7 +71,9 @@ nav {
   width: 80%;
   margin-top: 2%;
   display: flex;
-  justify-content: space-between;
+  gap: 2%;
+  row-gap: 30px;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -115,6 +119,7 @@ nav {
 }
 
 .detail-country-section {
+  margin-top: 5%;
   width: 80%;
   display: flex;
   flex-direction: column;
@@ -130,6 +135,7 @@ nav {
 }
 
 .details-container {
+  margin-top: 5%;
   width: 100%;
   display: flex;
   flex-direction: row;

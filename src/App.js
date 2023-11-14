@@ -4,6 +4,40 @@ import data from "./data.json";
 function App() {
   const [whichScreen, setWhichScreen] = useState("home");
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [searchCountry, setSearchCountry] = useState("");
+  const [region, setRegion] = useState("None");
+
+  let countriesData;
+  function handleSearchChange(e) {
+    e.preventDefault();
+    const searchValue = e.target.value;
+    setSearchCountry(searchValue);
+  }
+
+  function handleRegionSelect(e) {
+    e.preventDefault();
+    const selectedRegion = e.target.value;
+    setRegion(selectedRegion);
+  }
+  countriesData = data.filter((c) =>
+    c.name.toLowerCase().includes(searchCountry.toLowerCase())
+  );
+
+  if (region === "None") countriesData = countriesData;
+  if (region === "Africa")
+    countriesData = data.slice().filter((c) => c.region === "Africa");
+  if (region === "America")
+    countriesData = data.slice().filter((c) => c.region === "Americas");
+  if (region === "Europe")
+    countriesData = data.slice().filter((c) => c.region === "Europe");
+  if (region === "Oceania")
+    countriesData = data.slice().filter((c) => c.region === "Oceania");
+  if (region === "Asia")
+    countriesData = data.slice().filter((c) => c.region === "Asia");
+
+  function handleGoBackToHome() {
+    setSelectedCountry(null);
+  }
 
   function handleScreenSwitch(screen) {
     setWhichScreen(screen);
@@ -12,15 +46,27 @@ function App() {
   function handleCountrySelection(val) {
     const selected = val;
     setSelectedCountry(selected);
-    console.log(selected);
   }
 
   return (
     <div className="app">
       <Navbar />
 
-      <Home onCountrySelect={handleCountrySelection} />
-      {/* <DetailCountry /> */}
+      {!(selectedCountry !== null) ? (
+        <Home
+          searchCountry={searchCountry}
+          onSearchChange={handleSearchChange}
+          onCountrySelect={handleCountrySelection}
+          onRegionChange={handleRegionSelect}
+          region={region}
+          countriesData={countriesData}
+        />
+      ) : (
+        <DetailCountry
+          selectedCountry={selectedCountry}
+          onGoBackToHome={handleGoBackToHome}
+        />
+      )}
     </div>
   );
 }
@@ -37,41 +83,58 @@ function Navbar() {
   );
 }
 
-function Home({ onCountrySelect }) {
+function Home({
+  onCountrySelect,
+  onSearchChange,
+  searchCountry,
+  onRegionChange,
+  region,
+  countriesData,
+}) {
   return (
     <section className="home-section">
-      <SearchBar />
-      <Countries onCountrySelect={onCountrySelect} />
+      <SearchBar
+        searchCountry={searchCountry}
+        onSearchChange={onSearchChange}
+        onRegionChange={onRegionChange}
+        region={region}
+      />
+      <Countries
+        countriesData={countriesData}
+        onCountrySelect={onCountrySelect}
+      />
     </section>
   );
 }
 
-function SearchBar() {
+function SearchBar({ onSearchChange, searchCountry, onRegionChange, region }) {
   return (
     <div className="search-bar">
-      <input placeholder="Search for a country..." />
+      <input
+        value={searchCountry}
+        onChange={(e) => onSearchChange(e)}
+        placeholder="Search for a country..."
+      />
 
-      <select>
-        <option>Africa</option>
-        <option>America</option>
-        <option>Asia</option>
-        <option>Europe</option>
-        <option>Oceania</option>
+      <select value={region} onChange={(e) => onRegionChange(e)}>
+        <option value={"None"}>None</option>
+        <option value={"Africa"}>Africa</option>
+        <option value={"America"}>America</option>
+        <option value={"Asia"}>Asia</option>
+        <option value={"Europe"}>Europe</option>
+        <option value={"Oceania"}>Oceania</option>
       </select>
     </div>
   );
 }
 
-function Countries({ onCountrySelect }) {
+function Countries({ onCountrySelect, countriesData }) {
   return (
     <div className="countries-container">
       {" "}
-      {data.map(
-        (c, i) =>
-          i < 8 && (
-            <Country onCountrySelect={onCountrySelect} key={i} country={c} />
-          )
-      )}
+      {countriesData.map((c, i) => (
+        <Country onCountrySelect={onCountrySelect} key={i} country={c} />
+      ))}
     </div>
   );
 }
@@ -90,12 +153,15 @@ function Country({ country, onCountrySelect }) {
   );
 }
 
-function DetailCountry() {
-  const country = data.filter((c) => c.name === "Poland")[0];
+function DetailCountry({ selectedCountry, onGoBackToHome }) {
+  const country = data.filter((c) => c.name === selectedCountry)[0];
 
   return (
     <section className="detail-country-section">
-      <button>Back</button>
+      <button className="go-back-button" onClick={() => onGoBackToHome()}>
+        Back
+      </button>
+
       <div className="details-container">
         <img src={country.flag} alt="flag" />
         <div className="details">
@@ -107,17 +173,21 @@ function DetailCountry() {
             <li>Sub Region: {country.subregion}</li>
             <li>Capital: {country.capital}</li>
             <li>Top Level Domain: {country.topLevelDomain}</li>
-            <li>Currencies: {country.currencies.name}</li>
-            <li>Languages: {country.languages.name}</li>
+            <li>Currencies: {country.currencies[0].name}</li>
+            <li>Languages: {country.languages[0].name}</li>
           </ul>
-          <div className="borders-container">
-            <p>Border Countries: </p>
-            <ul className="country-borders">
-              {country.borders.map((b, i) => (
-                <li key={i}>{b}</li>
-              ))}
-            </ul>
-          </div>
+          {country.borders ? (
+            <div className="borders-container">
+              <p>Border Countries: </p>
+              <ul className="country-borders">
+                {country.borders.map((b, i) => (
+                  <li key={i}>{b}</li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </section>

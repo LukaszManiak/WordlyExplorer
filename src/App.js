@@ -5,6 +5,12 @@ function App() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [searchCountry, setSearchCountry] = useState("");
   const [region, setRegion] = useState("None");
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  function handleModeChange() {
+    setIsDarkMode(!isDarkMode);
+    document.body.classList.toggle("dark-mode");
+  }
 
   let countriesData;
   function handleSearchChange(e) {
@@ -18,20 +24,55 @@ function App() {
     const selectedRegion = e.target.value;
     setRegion(selectedRegion);
   }
-  countriesData = data.filter((c) =>
-    c.name.toLowerCase().includes(searchCountry.toLowerCase())
-  );
 
-  if (region === "None") countriesData = countriesData;
-  if (region === "Africa")
+  if (region === "None" && searchCountry === "") countriesData = data;
+
+  if (region === "None" && searchCountry !== "")
+    countriesData = data.filter((c) =>
+      c.name.toLowerCase().includes(searchCountry.toLowerCase())
+    );
+  if (region === "Africa" && searchCountry !== "")
+    countriesData = data
+      .slice()
+      .filter((c) => c.name.toLowerCase().includes(searchCountry.toLowerCase()))
+      .filter((c) => c.region === "Africa");
+  if (region === "America" && searchCountry !== "")
+    countriesData = data
+      .slice()
+      .filter((c) => c.region === "Americas")
+      .filter((c) =>
+        c.name.toLowerCase().includes(searchCountry.toLowerCase())
+      );
+  if (region === "Europe" && searchCountry !== "")
+    countriesData = data
+      .slice()
+      .filter((c) => c.region === "Europe")
+      .filter((c) =>
+        c.name.toLowerCase().includes(searchCountry.toLowerCase())
+      );
+  if (region === "Oceania" && searchCountry !== "")
+    countriesData = data
+      .slice()
+      .filter((c) => c.region === "Oceania")
+      .filter((c) =>
+        c.name.toLowerCase().includes(searchCountry.toLowerCase())
+      );
+  if (region === "Asia" && searchCountry !== "")
+    countriesData = data
+      .slice()
+      .filter((c) => c.region === "Asia")
+      .filter((c) =>
+        c.name.toLowerCase().includes(searchCountry.toLowerCase())
+      );
+  if (region === "Africa" && searchCountry === "")
     countriesData = data.slice().filter((c) => c.region === "Africa");
-  if (region === "America")
+  if (region === "America" && searchCountry === "")
     countriesData = data.slice().filter((c) => c.region === "Americas");
-  if (region === "Europe")
+  if (region === "Europe" && searchCountry === "")
     countriesData = data.slice().filter((c) => c.region === "Europe");
-  if (region === "Oceania")
+  if (region === "Oceania" && searchCountry === "")
     countriesData = data.slice().filter((c) => c.region === "Oceania");
-  if (region === "Asia")
+  if (region === "Asia" && searchCountry === "")
     countriesData = data.slice().filter((c) => c.region === "Asia");
 
   function handleGoBackToHome() {
@@ -41,14 +82,16 @@ function App() {
   function handleCountrySelection(val) {
     const selected = val;
     setSelectedCountry(selected);
+    console.log(selected);
   }
 
   return (
     <div className="app">
-      <Navbar />
+      <Navbar onModeChange={handleModeChange} isDarkMode={isDarkMode} />
 
       {!(selectedCountry !== null) ? (
         <Home
+          isDarkMode={isDarkMode}
           searchCountry={searchCountry}
           onSearchChange={handleSearchChange}
           onCountrySelect={handleCountrySelection}
@@ -58,6 +101,8 @@ function App() {
         />
       ) : (
         <DetailCountry
+          onCountrySelect={handleCountrySelection}
+          isDarkMode={isDarkMode}
           selectedCountry={selectedCountry}
           onGoBackToHome={handleGoBackToHome}
         />
@@ -66,13 +111,22 @@ function App() {
   );
 }
 
-function Navbar() {
+function Navbar({ isDarkMode, onModeChange }) {
   return (
-    <nav>
+    <nav className={!isDarkMode ? "nav bright-mode" : "nav dark-mode"}>
       <h1>Where in the world?</h1>
 
       <div>
-        <button>Dark Mode</button>
+        <button
+          className={
+            !isDarkMode
+              ? "dark-mode-button bright-mode"
+              : "dark-mode-button dark-mode"
+          }
+          onClick={() => onModeChange()}
+        >
+          {!isDarkMode ? "🌕" : "🌚"} Dark Mode
+        </button>
       </div>
     </nav>
   );
@@ -85,6 +139,8 @@ function Home({
   onRegionChange,
   region,
   countriesData,
+  isDarkMode,
+  onGoBackToHome,
 }) {
   return (
     <section className="home-section">
@@ -94,10 +150,20 @@ function Home({
         onRegionChange={onRegionChange}
         region={region}
       />
-      <Countries
-        countriesData={countriesData}
-        onCountrySelect={onCountrySelect}
-      />
+      {countriesData.length ? (
+        <>
+          <Countries
+            isDarkMode={isDarkMode}
+            countriesData={countriesData}
+            onCountrySelect={onCountrySelect}
+          />
+        </>
+      ) : (
+        <NoCountriesHomeScreen
+          isDarkMode={isDarkMode}
+          onGoBackToHome={onGoBackToHome}
+        />
+      )}
     </section>
   );
 }
@@ -123,20 +189,30 @@ function SearchBar({ onSearchChange, searchCountry, onRegionChange, region }) {
   );
 }
 
-function Countries({ onCountrySelect, countriesData }) {
+function Countries({ onCountrySelect, countriesData, isDarkMode }) {
   return (
     <div className="countries-container">
       {" "}
       {countriesData.map((c, i) => (
-        <Country onCountrySelect={onCountrySelect} key={i} country={c} />
+        <Country
+          isDarkMode={isDarkMode}
+          onCountrySelect={onCountrySelect}
+          key={i}
+          country={c}
+        />
       ))}
     </div>
   );
 }
 
-function Country({ country, onCountrySelect }) {
+function Country({ country, onCountrySelect, isDarkMode }) {
   return (
-    <div onClick={() => onCountrySelect(country.name)} className="country-box">
+    <div
+      onClick={() => onCountrySelect(country.name)}
+      className={
+        !isDarkMode ? "country-box bright-mode" : "country-box dark-mode"
+      }
+    >
       <img src={country.flag} alt="country flag" />
       <div className="country-box-detail">
         <p>{country.name}</p>
@@ -148,13 +224,38 @@ function Country({ country, onCountrySelect }) {
   );
 }
 
-function DetailCountry({ selectedCountry, onGoBackToHome }) {
-  const country = data.filter((c) => c.name === selectedCountry)[0];
+function DetailCountry({
+  selectedCountry,
+  onGoBackToHome,
+  isDarkMode,
+  onCountrySelect,
+}) {
+  let country;
+  if (selectedCountry.length === 3)
+    country = data.filter((c) => c.cioc === selectedCountry)[0];
+  if (selectedCountry.length > 3)
+    country = data.filter((c) => c.name === selectedCountry)[0];
+
+  if (!country) {
+    return (
+      <NoCountriesHomeScreen
+        isDarkMode={isDarkMode}
+        onGoBackToHome={onGoBackToHome}
+      />
+    );
+  }
 
   return (
     <section className="detail-country-section">
-      <button className="go-back-button" onClick={() => onGoBackToHome()}>
-        Back
+      <button
+        className={
+          !isDarkMode
+            ? "go-back-button bright-mode"
+            : "go-back-button dark-mode"
+        }
+        onClick={() => onGoBackToHome()}
+      >
+        {!isDarkMode ? "👈" : "👈🏿"} Back
       </button>
 
       <div className="details-container">
@@ -174,9 +275,17 @@ function DetailCountry({ selectedCountry, onGoBackToHome }) {
           {country.borders ? (
             <div className="borders-container">
               <p>Border Countries: </p>
-              <ul className="country-borders">
+              <ul className={"country-borders"}>
                 {country.borders.map((b, i) => (
-                  <li key={i}>{b}</li>
+                  <li
+                    className={
+                      !isDarkMode ? "border bright-mode" : "border dark-mode"
+                    }
+                    onClick={() => onCountrySelect(b)}
+                    key={i}
+                  >
+                    {b}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -186,6 +295,24 @@ function DetailCountry({ selectedCountry, onGoBackToHome }) {
         </div>
       </div>
     </section>
+  );
+}
+
+function NoCountriesHomeScreen({ isDarkMode, onGoBackToHome }) {
+  return (
+    <div className="no-countries-container">
+      <button
+        className={
+          !isDarkMode
+            ? "go-back-button bright-mode"
+            : "go-back-button dark-mode"
+        }
+        onClick={() => onGoBackToHome()}
+      >
+        {!isDarkMode ? "👈" : "👈🏿"} Back
+      </button>
+      <h1>There are no countries found. Please try another specs.</h1>
+    </div>
   );
 }
 

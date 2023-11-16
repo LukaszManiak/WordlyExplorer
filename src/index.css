@@ -84,15 +84,32 @@ nav.dark-mode {
   border-radius: 0.8rem;
 }
 
+input.bright-mode {
+  box-shadow: 0px 12px 28px -20px var(--darkGray);
+  background-color: var(--white);
+  color: var(--darkBlue);
+}
+input.bright-mode::placeholder {
+  color: var(--darkBlue);
+}
+input.dark-mode {
+  box-shadow: 0px 12px 28px -20px var(--veryDarkBlueLight);
+  background-color: var(--darkBlue);
+  color: var(--white);
+}
+
+input.dark-mode::placeholder {
+  color: var(--white);
+}
+
 .countries-container {
   width: 100%;
   margin-top: 2%;
-  display: flex;
-  gap: 2%;
-  row-gap: 30px;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
 }
 
 .country-box {
@@ -101,7 +118,7 @@ nav.dark-mode {
   flex-direction: column;
   align-items: center;
 
-  width: 23.5%;
+  width: 100%;
 
   border-radius: 0.8rem;
   margin-bottom: 30px;
@@ -225,9 +242,10 @@ nav.dark-mode {
   display: flex;
   height: 60vh;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   text-align: center;
+  padding: 3%;
 }
 
 .dark-mode-button {
@@ -251,6 +269,7 @@ nav.dark-mode {
   cursor: pointer;
   display: flex;
   justify-content: center;
+  margin-bottom: 10%;
 }
 .go-back-button.bright-mode {
   background-color: var(--white);
@@ -261,4 +280,56 @@ nav.dark-mode {
   background-color: var(--darkBlue);
   box-shadow: 0px 12px 28px -20px var(--veryDarkBlueLight);
   color: var(--white);
+}
+
+@media (max-width: 1168px) {
+  .countries-container {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 868px) {
+  .countries-container {
+    margin-top: 4%;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .details-container {
+    flex-direction: column;
+  }
+  .details-container img {
+    width: 100%;
+  }
+  .details {
+    margin-top: 10%;
+    width: 100%;
+    align-items: flex-start;
+    padding: 0;
+  }
+  .country-borders {
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 2%;
+  }
+  .border {
+    margin-bottom: 3%;
+    margin-right: 3%;
+  }
+}
+
+@media (max-width: 668px) {
+  .search-bar {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 2%;
+  }
+
+  .countries-container {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
 }

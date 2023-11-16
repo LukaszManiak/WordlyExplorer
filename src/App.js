@@ -149,6 +149,7 @@ function Home({
         onSearchChange={onSearchChange}
         onRegionChange={onRegionChange}
         region={region}
+        isDarkMode={isDarkMode}
       />
       {countriesData.length ? (
         <>
@@ -168,10 +169,17 @@ function Home({
   );
 }
 
-function SearchBar({ onSearchChange, searchCountry, onRegionChange, region }) {
+function SearchBar({
+  onSearchChange,
+  searchCountry,
+  onRegionChange,
+  region,
+  isDarkMode,
+}) {
   return (
     <div className="search-bar">
       <input
+        className={!isDarkMode ? "bright-mode" : "dark-mode"}
         value={searchCountry}
         onChange={(e) => onSearchChange(e)}
         placeholder="Search for a country..."
@@ -311,7 +319,7 @@ function NoCountriesHomeScreen({ isDarkMode, onGoBackToHome }) {
       >
         {!isDarkMode ? "👈" : "👈🏿"} Back
       </button>
-      <h1>There are no countries found. Please try another specs.</h1>
+      <h1>No countries found. Please try using different specifications.</h1>
     </div>
   );
 }

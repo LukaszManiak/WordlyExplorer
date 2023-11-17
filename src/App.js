@@ -19,9 +19,11 @@ function App() {
     setSearchCountry(searchValue);
   }
 
-  function handleRegionSelect(e) {
-    e.preventDefault();
-    const selectedRegion = e.target.value;
+  function handleRegionSelect(value) {
+    let selectedRegion;
+    if (value === region) selectedRegion = "None";
+    if (value !== region) selectedRegion = value;
+
     setRegion(selectedRegion);
   }
 
@@ -175,7 +177,14 @@ function SearchBar({
   onRegionChange,
   region,
   isDarkMode,
+  isSelected,
 }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function handleDropdownOpen() {
+    setIsOpen(!isOpen);
+  }
+
   return (
     <div className="search-bar">
       <input
@@ -185,14 +194,42 @@ function SearchBar({
         placeholder="Search for a country..."
       />
 
-      <select value={region} onChange={(e) => onRegionChange(e)}>
-        <option value={"None"}>None</option>
-        <option value={"Africa"}>Africa</option>
-        <option value={"America"}>America</option>
-        <option value={"Asia"}>Asia</option>
-        <option value={"Europe"}>Europe</option>
-        <option value={"Oceania"}>Oceania</option>
-      </select>
+      <div
+        className={
+          !isDarkMode
+            ? "drop-down-header bright-mode"
+            : "drop-down-header dark-mode"
+        }
+        onClick={() => handleDropdownOpen()}
+      >
+        Filter by region...
+      </div>
+
+      <ul
+        className={
+          isOpen
+            ? isDarkMode
+              ? "drop-down-menu bright-mode"
+              : "drop-down-menu dark-mode"
+            : "hidden"
+        }
+      >
+        <li role="button" onClick={() => onRegionChange("Africa")}>
+          Africa
+        </li>
+        <li role="button" onClick={() => onRegionChange("America")}>
+          America
+        </li>
+        <li role="button" onClick={() => onRegionChange("Asia")}>
+          Asia
+        </li>
+        <li role="button" onClick={() => onRegionChange("Europe")}>
+          Europe
+        </li>
+        <li role="button" onClick={() => onRegionChange("Oceania")}>
+          Oceania
+        </li>
+      </ul>
     </div>
   );
 }
@@ -312,8 +349,8 @@ function NoCountriesHomeScreen({ isDarkMode, onGoBackToHome }) {
       <button
         className={
           !isDarkMode
-            ? "go-back-button bright-mode"
-            : "go-back-button dark-mode"
+            ? "go-back-button no-countries bright-mode"
+            : "go-back-button no-countries dark-mode"
         }
         onClick={() => onGoBackToHome()}
       >

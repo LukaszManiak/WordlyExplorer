@@ -278,7 +278,7 @@ input.dark-mode::placeholder {
   flex-direction: column;
   justify-content: flex-start;
   align-self: center;
-
+  gap: 2rem;
   padding-left: 10%;
 }
 .country-name {
@@ -287,6 +287,12 @@ input.dark-mode::placeholder {
 }
 .details ul {
   list-style: none;
+}
+.details-lists {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  line-height: 35px;
 }
 
 .borders-container {
@@ -369,6 +375,7 @@ input.dark-mode::placeholder {
 .attribution-p {
   text-align: center;
   margin: 2% 0%;
+  padding: 0% 10%;
   color: var(--darkBlue);
 }
 
@@ -417,6 +424,19 @@ input.dark-mode::placeholder {
     align-items: flex-start;
     padding: 0;
   }
+  .details-lists {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .details-lists ul {
+    margin-bottom: 20px;
+  }
+
+  .borders-container {
+    margin-top: -10px;
+  }
+
   .country-borders {
     justify-content: flex-start;
     align-items: flex-start;

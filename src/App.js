@@ -107,6 +107,7 @@ function App() {
           isDarkMode={isDarkMode}
           selectedCountry={selectedCountry}
           onGoBackToHome={handleGoBackToHome}
+          data={data}
         />
       )}
       <AttributionP />
@@ -275,6 +276,7 @@ function DetailCountry({
   onGoBackToHome,
   isDarkMode,
   onCountrySelect,
+  data,
 }) {
   let country;
   if (selectedCountry.length === 3)
@@ -301,23 +303,27 @@ function DetailCountry({
         }
         onClick={() => onGoBackToHome()}
       >
-        {!isDarkMode ? "👈" : "👈🏿"} Back
+        {!isDarkMode ? "👈🏻" : "👈"} Back
       </button>
 
       <div className="details-container">
         <img src={country.flag} alt="flag" />
         <div className="details">
           <p className="country-name">{country.name}</p>
-          <ul>
-            <li>Native Name: {country.nativeName}</li>
-            <li>Population: {country.population} </li>
-            <li>Region: {country.region}</li>
-            <li>Sub Region: {country.subregion}</li>
-            <li>Capital: {country.capital}</li>
-            <li>Top Level Domain: {country.topLevelDomain}</li>
-            <li>Currencies: {country.currencies[0].name}</li>
-            <li>Languages: {country.languages[0].name}</li>
-          </ul>
+          <div className="details-lists">
+            <ul>
+              <li>Native Name: {country.nativeName}</li>
+              <li>Population: {country.population} </li>
+              <li>Region: {country.region}</li>
+              <li>Sub Region: {country.subregion}</li>
+              <li>Capital: {country.capital}</li>
+            </ul>
+            <ul>
+              <li>Top Level Domain: {country.topLevelDomain}</li>
+              <li>Currencies: {country.currencies[0].name}</li>
+              <li>Languages: {country.languages[0].name}</li>
+            </ul>
+          </div>
           {country.borders ? (
             <div className="borders-container">
               <p>Border Countries: </p>
@@ -355,7 +361,7 @@ function NoCountriesHomeScreen({ isDarkMode, onGoBackToHome }) {
         }
         onClick={() => onGoBackToHome()}
       >
-        {!isDarkMode ? "👈" : "👈🏿"} Back
+        {!isDarkMode ? "👈🏻" : "👈"} Back
       </button>
       <h1>No countries found. Please try using different specifications.</h1>
     </div>

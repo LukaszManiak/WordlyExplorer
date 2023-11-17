@@ -281,7 +281,7 @@ input.dark-mode::placeholder {
 
   padding-left: 10%;
 }
-.details p {
+.country-name {
   font-size: 1.6rem;
   font-weight: bold;
 }

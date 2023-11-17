@@ -261,7 +261,7 @@ function Country({ country, onCountrySelect, isDarkMode }) {
     >
       <img src={country.flag} alt="country flag" />
       <div className="country-box-detail">
-        <p>{country.name}</p>
+        <p className="country-name">{country.name}</p>
         <p>Population: {country.population}</p>
         <p>Region: {country.region}</p>
         <p>Capital: {country?.capital}</p>
@@ -307,7 +307,7 @@ function DetailCountry({
       <div className="details-container">
         <img src={country.flag} alt="flag" />
         <div className="details">
-          <p>{country.name}</p>
+          <p className="country-name">{country.name}</p>
           <ul>
             <li>Native Name: {country.nativeName}</li>
             <li>Population: {country.population} </li>

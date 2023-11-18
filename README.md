@@ -4,6 +4,10 @@
 
 This is a solution to the [REST Countries API with color theme switcher challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca).
 
+## Note
+
+Currently, data comes from the data.json file, but in the future, when I am ready to use useEffect hook, the data will be coming from the server.🤓
+
 ## Table of contents
 
 - [Overview](#overview)
@@ -19,7 +23,7 @@ This is a solution to the [REST Countries API with color theme switcher challeng
 
 Users should be able to:
 
-- See all countries from the API on the homepage
+- See all countries from the data.json file (API in the future) on the homepage
 - Search for a country using an `input` field
 - Filter countries by region
 - Click on a country to see more detailed information on a separate page
@@ -45,7 +49,7 @@ Users should be able to:
 
 ### Screenshot
 
-<!--
-![Screenshot 1](/screenshots/screen1.jpeg?raw=true "Screenshot 1")
-![Screenshot 2](/screenshots/screen5.jpg?raw=true "Screenshot 2")
-![Screenshot 3](/screenshots/screen4.jpeg?raw=true "Screenshot 3") -->
+![Screenshot 1](/screenshots/screen2.jpeg?raw=true "Screenshot 1")
+![Screenshot 2](/screenshots/screen3.jpeg?raw=true "Screenshot 2")
+![Screenshot 3](/screenshots/screen4.jpeg?raw=true "Screenshot 3")
+![Screenshot 3](/screenshots/screen1.jpeg?raw=true "Screenshot 4 (mobile)")

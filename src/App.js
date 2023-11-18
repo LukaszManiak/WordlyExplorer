@@ -186,6 +186,7 @@ function SearchBar({
   function handleDropdownOpen() {
     setIsOpen(!isOpen);
   }
+  console.log(region);
 
   return (
     <div className="search-bar">
@@ -216,19 +217,39 @@ function SearchBar({
             : "hidden"
         }
       >
-        <li role="button" onClick={() => onRegionChange("Africa")}>
+        <li
+          className={region === "Africa" ? "selected" : ""}
+          role="button"
+          onClick={() => onRegionChange("Africa")}
+        >
           Africa
         </li>
-        <li role="button" onClick={() => onRegionChange("America")}>
+        <li
+          className={region === "America" ? "selected" : ""}
+          role="button"
+          onClick={() => onRegionChange("America")}
+        >
           America
         </li>
-        <li role="button" onClick={() => onRegionChange("Asia")}>
+        <li
+          className={region === "Asia" ? "selected" : ""}
+          role="button"
+          onClick={() => onRegionChange("Asia")}
+        >
           Asia
         </li>
-        <li role="button" onClick={() => onRegionChange("Europe")}>
+        <li
+          className={region === "Europe" ? "selected" : ""}
+          role="button"
+          onClick={() => onRegionChange("Europe")}
+        >
           Europe
         </li>
-        <li role="button" onClick={() => onRegionChange("Oceania")}>
+        <li
+          className={region === "Oceania" ? "selected" : ""}
+          role="button"
+          onClick={() => onRegionChange("Oceania")}
+        >
           Oceania
         </li>
       </ul>

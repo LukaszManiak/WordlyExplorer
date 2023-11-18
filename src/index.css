@@ -264,7 +264,7 @@ input.dark-mode::placeholder {
 }
 
 .details-container {
-  margin-top: 5%;
+  margin-top: 8%;
   width: 100%;
   display: flex;
   flex-direction: row;

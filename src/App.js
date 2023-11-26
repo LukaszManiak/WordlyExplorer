@@ -284,9 +284,15 @@ function Country({ country, onCountrySelect, isDarkMode }) {
       <img src={country.flag} alt="country flag" />
       <div className="country-box-detail">
         <p className="country-name">{country.name}</p>
-        <p>Population: {country.population}</p>
-        <p>Region: {country.region}</p>
-        <p>Capital: {country?.capital}</p>
+        <p>
+          <b>Population</b>: {country.population}
+        </p>
+        <p>
+          <b>Region</b>: {country.region}
+        </p>
+        <p>
+          <b>Capital</b>: {country?.capital}
+        </p>
       </div>
     </div>
   );
@@ -333,16 +339,32 @@ function DetailCountry({
           <p className="country-name">{country.name}</p>
           <div className="details-lists">
             <ul>
-              <li>Native Name: {country.nativeName}</li>
-              <li>Population: {country.population} </li>
-              <li>Region: {country.region}</li>
-              <li>Sub Region: {country.subregion}</li>
-              <li>Capital: {country.capital}</li>
+              <li>
+                <b>Native Name</b>: {country.nativeName}
+              </li>
+              <li>
+                <b>Population</b>: {country.population}{" "}
+              </li>
+              <li>
+                <b>Region</b>: {country.region}
+              </li>
+              <li>
+                <b>Sub Region</b>: {country.subregion}
+              </li>
+              <li>
+                <b>Capital</b>: {country.capital}
+              </li>
             </ul>
             <ul>
-              <li>Top Level Domain: {country.topLevelDomain}</li>
-              <li>Currencies: {country.currencies[0].name}</li>
-              <li>Languages: {country.languages[0].name}</li>
+              <li>
+                <b>Top Level Domain</b>: {country.topLevelDomain}
+              </li>
+              <li>
+                <b>Currencies</b>: {country.currencies[0].name}
+              </li>
+              <li>
+                <b>Languages</b>: {country.languages[0].name}
+              </li>
             </ul>
           </div>
           {country.borders ? (

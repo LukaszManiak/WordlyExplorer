@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import data from "./data.json";
 
 function App() {
@@ -6,6 +6,51 @@ function App() {
   const [searchCountry, setSearchCountry] = useState("");
   const [region, setRegion] = useState("None");
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  //IN PROGRESS
+
+  const [countries, setCountries] = useState([]);
+  // error and loading case
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // getting data
+  // useEffect(
+  //   function () {
+  //     async function fetchMovies() {
+  //       try {
+  //         setIsLoading(true);
+  //         setError("");
+  //         const res = await fetch(
+  //           `https://restcountries.com/v3.1/name/${searchCountry}`
+  //         );
+
+  //         if (!res.ok)
+  //           throw new Error("Something went wrong with fetching data");
+
+  //         const data = await res.json();
+  //         if (data.Response === "False") throw new Error("data not found");
+
+  //         setCountries(data);
+  //       } catch (err) {
+  //         console.error(err.message);
+  //         setError(err.message);
+  //       } finally {
+  //         setIsLoading(false);
+  //       }
+  //     }
+
+  //     // if (!searchCountry.length < 2) {
+  //     //   setCountries([]);
+  //     //   setError("");
+  //     //   return;
+  //     // }
+  //     fetchMovies();
+  //   },
+  //   [searchCountry]
+  // );
+
+  // console.log(countries);
 
   function handleModeChange() {
     setIsDarkMode(!isDarkMode);
@@ -84,7 +129,6 @@ function App() {
   function handleCountrySelection(val) {
     const selected = val;
     setSelectedCountry(selected);
-    console.log(selected);
   }
 
   return (
@@ -186,7 +230,6 @@ function SearchBar({
   function handleDropdownOpen() {
     setIsOpen(!isOpen);
   }
-  console.log(region);
 
   return (
     <div className="search-bar">

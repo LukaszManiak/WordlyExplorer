@@ -17,7 +17,7 @@ function App() {
   // getting data
   // useEffect(
   //   function () {
-  //     async function fetchMovies() {
+  //     async function fetchCountries() {
   //       try {
   //         setIsLoading(true);
   //         setError("");
@@ -40,12 +40,12 @@ function App() {
   //       }
   //     }
 
-  //     // if (!searchCountry.length < 2) {
-  //     //   setCountries([]);
-  //     //   setError("");
-  //     //   return;
-  //     // }
-  //     fetchMovies();
+  //     if (searchCountry.length < 2) {
+  //       setCountries([]);
+  //       setError("");
+  //       return;
+  //     }
+  //     fetchCountries();
   //   },
   //   [searchCountry]
   // );

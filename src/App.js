@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import data from "./data.json";
 
 function App() {
@@ -6,6 +6,7 @@ function App() {
   const [searchCountry, setSearchCountry] = useState("");
   const [region, setRegion] = useState("None");
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const bodyEl = useRef(document.getElementsByTagName("body"));
 
   //IN PROGRESS
 
@@ -54,8 +55,14 @@ function App() {
 
   function handleModeChange() {
     setIsDarkMode(!isDarkMode);
-    document.body.classList.toggle("dark-mode");
   }
+
+  useEffect(
+    function () {
+      bodyEl.current[0].classList.toggle("dark-mode");
+    },
+    [isDarkMode]
+  );
 
   let countriesData;
   function handleSearchChange(e) {

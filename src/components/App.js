@@ -102,14 +102,11 @@ function App() {
     },
     [searchCountry, region]
   );
-  // changing color pallete
-  useEffect(function () {
-    bodyEl.current[0].classList.toggle("dark-mode");
-  }, []);
 
+  // changing color pallete
   useEffect(
     function () {
-      bodyEl.current[0].classList.toggle("dark-mode");
+      bodyEl.current[0].classList.toggle("dark-mode", isDarkMode);
     },
     [isDarkMode]
   );

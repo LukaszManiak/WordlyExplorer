@@ -64,13 +64,14 @@ nav.dark-mode {
 .home-section {
   width: 80%;
   display: flex;
-  margin-top: 3%;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 .search-bar {
-  width: 100%;
+  margin: 40px 0;
+  width: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -186,10 +187,9 @@ input.dark-mode::placeholder {
 
 .countries-container {
   width: 100%;
-  margin-top: 2%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(auto, 1fr);
   grid-column-gap: 20px;
   grid-row-gap: 20px;
 }
@@ -248,7 +248,7 @@ input.dark-mode::placeholder {
 }
 
 .detail-country-section {
-  margin-top: 5%;
+  margin-top: 7%;
   width: 80%;
   display: flex;
   flex-direction: column;
@@ -264,7 +264,7 @@ input.dark-mode::placeholder {
 }
 
 .details-container {
-  margin-top: 8%;
+  margin-top: 4%;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -350,6 +350,7 @@ input.dark-mode::placeholder {
   color: var(--white);
 }
 
+/* go back button */
 .go-back-button {
   padding: 1rem 2rem;
   border: none;
@@ -368,10 +369,12 @@ input.dark-mode::placeholder {
   box-shadow: 0px 12px 28px -20px var(--veryDarkBlueLight);
   color: var(--white);
 }
+
 .no-countries {
   margin-bottom: 10%;
 }
 
+/* attribution style */
 .attribution-p {
   text-align: center;
   margin: 2% 0%;
@@ -389,10 +392,18 @@ input.dark-mode::placeholder {
   color: var(--veryDarkBlueLight);
 }
 
+/* loader style */
+.loader {
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+/* media queries */
 @media (max-width: 1368px) {
   .countries-container {
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
   }
 
   .drop-down-header {
@@ -407,9 +418,8 @@ input.dark-mode::placeholder {
 
 @media (max-width: 968px) {
   .countries-container {
-    margin-top: 4%;
+    margin-top: 2%;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, 1fr);
   }
 
   .details-container {
@@ -454,12 +464,10 @@ input.dark-mode::placeholder {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 10px;
-    margin-top: 2%;
   }
 
   .countries-container {
     grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(4, 1fr);
   }
 
   .drop-down-header {

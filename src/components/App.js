@@ -1,5 +1,10 @@
 import { useEffect, useState, useRef } from "react";
-import data from "./data.json";
+
+// components
+import Loader from "./Loader.js";
+import ErrorMessage from "./ErrorMessage.js";
+import Navbar from "./Navbar.js";
+import AttributionP from "./AttributionP.js";
 
 function App() {
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -11,66 +16,22 @@ function App() {
   //IN PROGRESS
 
   const [countries, setCountries] = useState([]);
-  // error and loading case
+  // error and loading states
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // getting data
-  // useEffect(
-  //   function () {
-  //     async function fetchCountries() {
-  //       try {
-  //         setIsLoading(true);
-  //         setError("");
-  //         const res = await fetch(
-  //           `https://restcountries.com/v3.1/name/${searchCountry}`
-  //         );
-
-  //         if (!res.ok)
-  //           throw new Error("Something went wrong with fetching data");
-
-  //         const data = await res.json();
-  //         if (data.Response === "False") throw new Error("data not found");
-
-  //         setCountries(data);
-  //       } catch (err) {
-  //         console.error(err.message);
-  //         setError(err.message);
-  //       } finally {
-  //         setIsLoading(false);
-  //       }
-  //     }
-
-  //     if (searchCountry.length < 2) {
-  //       setCountries([]);
-  //       setError("");
-  //       return;
-  //     }
-  //     fetchCountries();
-  //   },
-  //   [searchCountry]
-  // );
-
-  // console.log(countries);
-
+  // color change handler
   function handleModeChange() {
     setIsDarkMode(!isDarkMode);
   }
 
-  useEffect(
-    function () {
-      bodyEl.current[0].classList.toggle("dark-mode");
-    },
-    [isDarkMode]
-  );
-
-  let countriesData;
+  // search input
   function handleSearchChange(e) {
-    e.preventDefault();
     const searchValue = e.target.value;
     setSearchCountry(searchValue);
   }
 
+  // region selection
   function handleRegionSelect(value) {
     let selectedRegion;
     if (value === region) selectedRegion = "None";
@@ -79,78 +40,100 @@ function App() {
     setRegion(selectedRegion);
   }
 
-  if (region === "None" && searchCountry === "") countriesData = data;
-
-  if (region === "None" && searchCountry !== "")
-    countriesData = data.filter((c) =>
-      c.name.toLowerCase().includes(searchCountry.toLowerCase())
-    );
-  if (region === "Africa" && searchCountry !== "")
-    countriesData = data
-      .slice()
-      .filter((c) => c.name.toLowerCase().includes(searchCountry.toLowerCase()))
-      .filter((c) => c.region === "Africa");
-  if (region === "America" && searchCountry !== "")
-    countriesData = data
-      .slice()
-      .filter((c) => c.region === "Americas")
-      .filter((c) =>
-        c.name.toLowerCase().includes(searchCountry.toLowerCase())
-      );
-  if (region === "Europe" && searchCountry !== "")
-    countriesData = data
-      .slice()
-      .filter((c) => c.region === "Europe")
-      .filter((c) =>
-        c.name.toLowerCase().includes(searchCountry.toLowerCase())
-      );
-  if (region === "Oceania" && searchCountry !== "")
-    countriesData = data
-      .slice()
-      .filter((c) => c.region === "Oceania")
-      .filter((c) =>
-        c.name.toLowerCase().includes(searchCountry.toLowerCase())
-      );
-  if (region === "Asia" && searchCountry !== "")
-    countriesData = data
-      .slice()
-      .filter((c) => c.region === "Asia")
-      .filter((c) =>
-        c.name.toLowerCase().includes(searchCountry.toLowerCase())
-      );
-  if (region === "Africa" && searchCountry === "")
-    countriesData = data.slice().filter((c) => c.region === "Africa");
-  if (region === "America" && searchCountry === "")
-    countriesData = data.slice().filter((c) => c.region === "Americas");
-  if (region === "Europe" && searchCountry === "")
-    countriesData = data.slice().filter((c) => c.region === "Europe");
-  if (region === "Oceania" && searchCountry === "")
-    countriesData = data.slice().filter((c) => c.region === "Oceania");
-  if (region === "Asia" && searchCountry === "")
-    countriesData = data.slice().filter((c) => c.region === "Asia");
-
+  // back to home
   function handleGoBackToHome() {
+    setSearchCountry("");
+    setRegion("None");
     setSelectedCountry(null);
   }
 
+  // selecting certain country
   function handleCountrySelection(val) {
     const selected = val;
     setSelectedCountry(selected);
   }
 
+  // getting data from API
+  useEffect(
+    function () {
+      async function fetchCountries() {
+        try {
+          setIsLoading(true);
+          setError("");
+          const res = await fetch("https://restcountries.com/v3.1/all");
+
+          if (!res.ok)
+            throw new Error("Something went wrong with fetching data");
+
+          const data = await res.json();
+          if (data.Response === "False") throw new Error("data not found");
+
+          // filtering for needed data
+          let finalData = data;
+
+          if (searchCountry.length > 0) {
+            const searchQuery = searchCountry.toLowerCase();
+            finalData = finalData.filter((c) =>
+              c.name.common.toLowerCase().includes(searchQuery)
+            );
+          }
+
+          if (region !== "None") {
+            finalData = finalData.filter((c) => c.region === region);
+          }
+
+          setCountries(finalData);
+          console.log(finalData);
+          setError("");
+        } catch (err) {
+          console.error(err.message);
+          setError(err.message);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+
+      // if (searchCountry.length === 0) {
+      //   setCountries([]);
+      //   setError("");
+      //   return;
+      // }
+      fetchCountries();
+    },
+    [searchCountry, region]
+  );
+  // changing color pallete
+  useEffect(
+    function () {
+      bodyEl.current[0].classList.toggle("dark-mode");
+    },
+    [isDarkMode]
+  );
+
   return (
     <div className="app">
       <Navbar onModeChange={handleModeChange} isDarkMode={isDarkMode} />
+      {!selectedCountry && (
+        <SearchBar
+          searchCountry={searchCountry}
+          onSearchChange={handleSearchChange}
+          onRegionChange={handleRegionSelect}
+          region={region}
+          isDarkMode={isDarkMode}
+        />
+      )}
 
       {!(selectedCountry !== null) ? (
         <Home
+          isLoading={isLoading}
           isDarkMode={isDarkMode}
           searchCountry={searchCountry}
           onSearchChange={handleSearchChange}
           onCountrySelect={handleCountrySelection}
           onRegionChange={handleRegionSelect}
           region={region}
-          countriesData={countriesData}
+          countries={countries}
+          onGoBackToHome={handleGoBackToHome}
         />
       ) : (
         <DetailCountry
@@ -158,66 +141,38 @@ function App() {
           isDarkMode={isDarkMode}
           selectedCountry={selectedCountry}
           onGoBackToHome={handleGoBackToHome}
-          data={data}
+          data={countries}
         />
       )}
+
       <AttributionP />
+      {error && <ErrorMessage err={error} />}
     </div>
-  );
-}
-
-function Navbar({ isDarkMode, onModeChange }) {
-  return (
-    <nav className={!isDarkMode ? "nav bright-mode" : "nav dark-mode"}>
-      <h1>Where in the world?</h1>
-
-      <div>
-        <button
-          className={
-            !isDarkMode
-              ? "dark-mode-button bright-mode"
-              : "dark-mode-button dark-mode"
-          }
-          onClick={() => onModeChange()}
-        >
-          {!isDarkMode ? "🌕" : "🌚"} Dark Mode
-        </button>
-      </div>
-    </nav>
   );
 }
 
 function Home({
   onCountrySelect,
-  onSearchChange,
-  searchCountry,
-  onRegionChange,
-  region,
-  countriesData,
+  isLoading,
+  countries,
   isDarkMode,
   onGoBackToHome,
 }) {
   return (
     <section className="home-section">
-      <SearchBar
-        searchCountry={searchCountry}
-        onSearchChange={onSearchChange}
-        onRegionChange={onRegionChange}
-        region={region}
-        isDarkMode={isDarkMode}
-      />
-      {countriesData.length ? (
-        <>
-          <Countries
-            isDarkMode={isDarkMode}
-            countriesData={countriesData}
-            onCountrySelect={onCountrySelect}
-          />
-        </>
-      ) : (
+      {isLoading && <Loader />}
+
+      {!isLoading && countries.length === 0 && (
         <NoCountriesHomeScreen
           isDarkMode={isDarkMode}
           onGoBackToHome={onGoBackToHome}
+        />
+      )}
+      {!isLoading && countries.length > 0 && (
+        <Countries
+          isDarkMode={isDarkMode}
+          countries={countries}
+          onCountrySelect={onCountrySelect}
         />
       )}
     </section>
@@ -230,7 +185,6 @@ function SearchBar({
   onRegionChange,
   region,
   isDarkMode,
-  isSelected,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -277,7 +231,7 @@ function SearchBar({
         <li
           className={region === "America" ? "selected" : ""}
           role="button"
-          onClick={() => onRegionChange("America")}
+          onClick={() => onRegionChange("Americas")}
         >
           America
         </li>
@@ -307,11 +261,11 @@ function SearchBar({
   );
 }
 
-function Countries({ onCountrySelect, countriesData, isDarkMode }) {
+function Countries({ onCountrySelect, countries, isDarkMode }) {
   return (
     <div className="countries-container">
       {" "}
-      {countriesData.map((c, i) => (
+      {countries.map((c, i) => (
         <Country
           isDarkMode={isDarkMode}
           onCountrySelect={onCountrySelect}
@@ -326,14 +280,14 @@ function Countries({ onCountrySelect, countriesData, isDarkMode }) {
 function Country({ country, onCountrySelect, isDarkMode }) {
   return (
     <div
-      onClick={() => onCountrySelect(country.name)}
+      onClick={() => onCountrySelect(country.name.common)}
       className={
         !isDarkMode ? "country-box bright-mode" : "country-box dark-mode"
       }
     >
-      <img src={country.flag} alt="country flag" />
+      <img src={country.flags.svg} alt="country flag" />
       <div className="country-box-detail">
-        <p className="country-name">{country.name}</p>
+        <p className="country-name">{country.name.common}</p>
         <p>
           <b>Population</b>: {country.population}
         </p>
@@ -356,11 +310,11 @@ function DetailCountry({
   data,
 }) {
   let country;
-  if (selectedCountry.length === 3)
-    country = data.filter((c) => c.cioc === selectedCountry)[0];
-  if (selectedCountry.length > 3)
-    country = data.filter((c) => c.name === selectedCountry)[0];
 
+  if (typeof selectedCountry === "string" && selectedCountry.length === 3)
+    country = data.filter((c) => c.cioc === selectedCountry)[0];
+  if (typeof selectedCountry === "string" && selectedCountry.length > 3)
+    country = data.filter((c) => c.name.common === selectedCountry)[0];
   if (!country) {
     return (
       <NoCountriesHomeScreen
@@ -384,9 +338,9 @@ function DetailCountry({
       </button>
 
       <div className="details-container">
-        <img src={country.flag} alt="flag" />
+        <img src={country.flags.svg} alt="flag" />
         <div className="details">
-          <p className="country-name">{country.name}</p>
+          <p className="country-name">{country.name.common}</p>
           <div className="details-lists">
             <ul>
               <li>
@@ -410,10 +364,10 @@ function DetailCountry({
                 <b>Top Level Domain</b>: {country.topLevelDomain}
               </li>
               <li>
-                <b>Currencies</b>: {country.currencies[0].name}
+                <b>Currencies</b>: {country.currencies.name}
               </li>
               <li>
-                <b>Languages</b>: {country.languages[0].name}
+                <b>Languages</b>: {country.languages.name}
               </li>
             </ul>
           </div>
@@ -458,29 +412,6 @@ function NoCountriesHomeScreen({ isDarkMode, onGoBackToHome }) {
       </button>
       <h1>No countries found. Please try using different specifications.</h1>
     </div>
-  );
-}
-
-function AttributionP() {
-  return (
-    <p className="attribution-p">
-      Challenge by{" "}
-      <a
-        className="attribution-link"
-        href="https://www.frontendmentor.io/challenges/intro-section-with-dropdown-navigation-ryaPetHE5"
-      >
-        Frontend Mentor
-      </a>
-      . Coded by{" "}
-      <a
-        className="attribution-link"
-        href="https://github.com/LukaszManiak"
-        role="button"
-      >
-        Łukasz Maniak
-      </a>
-      .
-    </p>
   );
 }
 

@@ -50,7 +50,7 @@ export default function SearchBar({
           Africa
         </li>
         <li
-          className={region === "America" ? "selected" : ""}
+          className={region === "Americas" ? "selected" : ""}
           role="button"
           onClick={() => onRegionChange("Americas")}
         >

@@ -328,7 +328,7 @@ input.dark-mode::placeholder {
 
 .no-countries-container {
   display: flex;
-  width: 100%;
+  width: 80%;
   height: 45vh;
   flex-direction: column;
   align-items: center;

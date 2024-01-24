@@ -5,6 +5,8 @@
 
 This is a solution to the [REST Countries API with color theme switcher challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca).
 
+WordlyExplorer is an application for exploring information about countries worldwide. Thanks to the external API, you can effortlessly search and select countries based on regions. Discover a world details on your own!
+
 ## Table of contents
 
 - [Overview](#overview)

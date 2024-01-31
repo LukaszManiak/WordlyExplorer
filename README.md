@@ -1,4 +1,8 @@
 # WordlyExplorer
+<<<<<<< HEAD
+=======
+
+>>>>>>> 375f646bfd9864af65e146ad3ae03ad16556270f
 
 ## Welcome! 👋
 

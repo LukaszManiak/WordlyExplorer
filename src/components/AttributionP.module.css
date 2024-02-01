@@ -1,0 +1,17 @@
+/* attribution style */
+.attribution-p {
+  text-align: center;
+  margin: 2% 0%;
+  padding: 0% 10%;
+  color: var(--darkBlue);
+}
+
+.attribution-link {
+  text-decoration: none;
+  color: var(--darkBlue);
+  transition: all ease-in-out 0.15s;
+}
+.attribution-link:hover {
+  text-decoration: none;
+  color: var(--veryDarkBlueLight);
+}

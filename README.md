@@ -31,7 +31,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [GitHub](https://github.com/LukaszManiak/Frontend-Mentor-REST-Countries)
-- Live Site URL: [Netlify](https://lukas-rest-countries.netlify.app/)
+- Live Site URL: [Netlify](https://wordlyexplorer.netlify.app/)
 
 ### Built with
 

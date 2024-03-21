@@ -22,6 +22,15 @@ export default function DetailCountry({
     );
   }
 
+  console.log(
+    country,
+    // country.currencies[Object.keys(country.currencies)[0]].name
+
+    Object.entries(country.languages)
+      .map(([code, name]) => ({ code, name }))
+      .map((lan) => lan.name)
+  );
+
   return (
     <section className="detail-country-section">
       <button
@@ -38,11 +47,14 @@ export default function DetailCountry({
       <div className="details-container">
         <img src={country.flags.svg} alt="flag" />
         <div className="details">
-          <p className="country-name">{country.name.common}</p>
+          <h1 className="country-name">{country.name.common}</h1>
           <div className="details-lists">
             <ul>
               <li>
-                <b>Native Name</b>: {country.nativeName}
+                <b>Native Name</b>:{" "}
+                {country.name.official
+                  ? country.name.official
+                  : country.name.nativeName.eng.official}
               </li>
               <li>
                 <b>Population</b>: {country.population}{" "}
@@ -59,13 +71,17 @@ export default function DetailCountry({
             </ul>
             <ul>
               <li>
-                <b>Top Level Domain</b>: {country.topLevelDomain}
+                <b>Top Level Domain</b>: {country.tld}
               </li>
               <li>
-                <b>Currencies</b>: {country.currencies.name}
+                <b>Currencies</b>:{" "}
+                {country.currencies[Object.keys(country.currencies)[0]].name}
               </li>
               <li>
-                <b>Languages</b>: {country.languages.name}
+                <b>Languages</b>:{" "}
+                {Object.entries(country.languages)
+                  .map(([code, name]) => ({ code, name }))
+                  .map((lan) => `${lan.name}  | `)}
               </li>
             </ul>
           </div>

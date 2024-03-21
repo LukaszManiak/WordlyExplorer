@@ -22,15 +22,6 @@ export default function DetailCountry({
     );
   }
 
-  console.log(
-    country,
-    // country.currencies[Object.keys(country.currencies)[0]].name
-
-    Object.entries(country.languages)
-      .map(([code, name]) => ({ code, name }))
-      .map((lan) => lan.name)
-  );
-
   return (
     <section className="detail-country-section">
       <button

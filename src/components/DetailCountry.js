@@ -10,7 +10,7 @@ export default function DetailCountry({
   let country;
 
   if (typeof selectedCountry === "string" && selectedCountry.length === 3)
-    country = data.filter((c) => c.cioc === selectedCountry)[0];
+    country = data.filter((c) => c.cca3 === selectedCountry)[0];
   if (typeof selectedCountry === "string" && selectedCountry.length > 3)
     country = data.filter((c) => c.name.common === selectedCountry)[0];
   if (!country) {

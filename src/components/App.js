@@ -89,10 +89,8 @@ function App() {
           }
 
           setCountries(finalData);
-          console.log(finalData);
           setError("");
         } catch (err) {
-          console.error(err.message);
           setError(err.message);
         } finally {
           setIsLoading(false);

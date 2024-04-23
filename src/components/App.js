@@ -1,16 +1,16 @@
 import { useEffect, useState, useRef } from "react";
 
 // components
-import Loader from "./Loader.js";
-import ErrorMessage from "./ErrorMessage.js";
-import Navbar from "./Navbar.js";
-import AttributionP from "./AttributionP.js";
-import Home from "./Home.js";
-import Country from "./Country.js";
-import Countries from "./Countries.js";
-import SearchBar from "./SearchBar.js";
-import NoCountriesHomeScreen from "./NoCountriesHomeScreen.js";
-import DetailCountry from "./DetailCountry.js";
+import Loader from "./UI/Loader.js";
+import ErrorMessage from "./UI/ErrorMessage.js";
+import Navbar from "./UI/Navbar.js";
+import AttributionP from "./UI/AttributionP.js";
+import Home from "./UI/Home.js";
+import Country from "./countries/Country.js";
+import Countries from "./countries/Countries.js";
+import SearchBar from "./UI/SearchBar.js";
+import NoCountriesHomeScreen from "./UI/NoCountriesHomeScreen.js";
+import DetailCountry from "./countries/DetailCountry.js";
 
 function App() {
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -20,7 +20,6 @@ function App() {
   const bodyEl = useRef(document.getElementsByTagName("body"));
 
   //IN PROGRESS
-
   const [countries, setCountries] = useState([]);
   // error and loading states
   const [isLoading, setIsLoading] = useState(false);

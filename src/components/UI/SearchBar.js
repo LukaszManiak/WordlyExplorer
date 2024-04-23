@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import styles from "./SearchBar.module.css";
 export default function SearchBar({
   onSearchChange,
   searchCountry,
@@ -14,9 +14,9 @@ export default function SearchBar({
   }
 
   return (
-    <div className="search-bar">
+    <div className={styles["search-bar"]}>
       <input
-        className={!isDarkMode ? "bright-mode" : "dark-mode"}
+        className={!isDarkMode ? styles["bright-mode"] : styles["dark-mode"]}
         value={searchCountry}
         onChange={(e) => onSearchChange(e)}
         placeholder="Search for a country..."
@@ -25,8 +25,8 @@ export default function SearchBar({
       <div
         className={
           !isDarkMode
-            ? "drop-down-header bright-mode"
-            : "drop-down-header dark-mode"
+            ? `${styles["drop-down-header"]} ${styles["bright-mode"]}`
+            : `${styles["drop-down-header"]} ${styles["dark-mode"]}`
         }
         onClick={() => handleDropdownOpen()}
       >
@@ -37,41 +37,41 @@ export default function SearchBar({
         className={
           isOpen
             ? isDarkMode
-              ? "drop-down-menu bright-mode"
-              : "drop-down-menu dark-mode"
+              ? `${styles["drop-down-menu"]} ${styles["bright-mode"]}`
+              : `${styles["drop-down-menu"]} ${styles["dark-mode"]}`
             : "hidden"
         }
       >
         <li
-          className={region === "Africa" ? "selected" : ""}
+          className={region === "Africa" ? styles["selected"] : ""}
           role="button"
           onClick={() => onRegionChange("Africa")}
         >
           Africa
         </li>
         <li
-          className={region === "Americas" ? "selected" : ""}
+          className={region === "Americas" ? styles["selected"] : ""}
           role="button"
           onClick={() => onRegionChange("Americas")}
         >
           America
         </li>
         <li
-          className={region === "Asia" ? "selected" : ""}
+          className={region === "Asia" ? styles["selected"] : ""}
           role="button"
           onClick={() => onRegionChange("Asia")}
         >
           Asia
         </li>
         <li
-          className={region === "Europe" ? "selected" : ""}
+          className={region === "Europe" ? styles["selected"] : ""}
           role="button"
           onClick={() => onRegionChange("Europe")}
         >
           Europe
         </li>
         <li
-          className={region === "Oceania" ? "selected" : ""}
+          className={region === "Oceania" ? styles["selected"] : ""}
           role="button"
           onClick={() => onRegionChange("Oceania")}
         >

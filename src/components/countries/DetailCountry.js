@@ -1,4 +1,5 @@
-import NoCountriesHomeScreen from "./NoCountriesHomeScreen";
+import NoCountriesHomeScreen from "../UI/NoCountriesHomeScreen";
+import styles from "./DetailCountry.module.css";
 
 export default function DetailCountry({
   selectedCountry,
@@ -23,7 +24,7 @@ export default function DetailCountry({
   }
 
   return (
-    <section className="detail-country-section">
+    <section className={styles["detail-country-section"]}>
       <button
         className={
           !isDarkMode
@@ -35,11 +36,11 @@ export default function DetailCountry({
         {!isDarkMode ? "👈🏻" : "👈"} Back
       </button>
 
-      <div className="details-container">
+      <div className={styles["details-container"]}>
         <img src={country.flags.svg} alt="flag" />
-        <div className="details">
+        <div className={styles["details"]}>
           <h1 className="country-name">{country.name.common}</h1>
-          <div className="details-lists">
+          <div className={styles["details-lists"]}>
             <ul>
               <li>
                 <b>Native Name</b>:{" "}
@@ -77,14 +78,12 @@ export default function DetailCountry({
             </ul>
           </div>
           {country.borders ? (
-            <div className="borders-container">
+            <div className={styles["borders-container"]}>
               <p>Border Countries: </p>
-              <ul className={"country-borders"}>
+              <ul className={styles["country-borders"]}>
                 {country.borders.map((b, i) => (
                   <li
-                    className={
-                      !isDarkMode ? "border bright-mode" : "border dark-mode"
-                    }
+                    className={`${styles.border} ${isDarkMode ? styles["dark-mode"] : styles["bright-mode"]}`}
                     onClick={() => onCountrySelect(b)}
                     key={i}
                   >

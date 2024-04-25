@@ -85,7 +85,7 @@ export default function DetailCountry({
                   <li
                     className={`${styles.border} ${isDarkMode ? styles["dark-mode"] : styles["bright-mode"]}`}
                     onClick={() => onCountrySelect(b)}
-                    key={i}
+                    key={b}
                   >
                     {b}
                   </li>

@@ -148,7 +148,7 @@ function App() {
                 <Country
                   isDarkMode={isDarkMode}
                   onCountrySelect={handleCountrySelection}
-                  key={i}
+                  key={c.name.common}
                   country={c}
                 />
               ))}
